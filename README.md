@@ -87,13 +87,25 @@ npm run db:seed      # inserts demo users, listings and one booked showing
 | Seller | `seller@demo.com`, `seller2@demo.com` |
 | Buyer | `buyer@demo.com`, `buyer2@demo.com` |
 
-### 5. Run the API
+### 5. Run the app
 
 ```bash
-npm run dev:server
+npm run dev
 ```
 
-Check it at <http://localhost:4000/api/health> → `{"status":"ok"}`.
+This starts both the API (<http://localhost:4000>) and the web app (<http://localhost:5173>).
+Open <http://localhost:5173> and use the **Demo seller** / **Demo buyer** buttons on the login page.
+
+(`npm run dev:server` and `npm run dev:client` start them separately.)
+
+### 6. Run the tests
+
+```bash
+npm test
+```
+
+Unit tests for the slot engine plus integration tests against the real API and database
+(they create and clean up their own data).
 
 ### Inspecting the database (optional)
 
