@@ -10,6 +10,10 @@ pg.types.setTypeParser(pg.types.builtins.DATE, (value) => value);
 // instead of opening a new one per request.
 export const pool = new pg.Pool({ connectionString: env.DATABASE_URL });
 
+// Either the pool or a client inside a transaction: both expose .query(),
+// so functions typed with Db work in and out of transactions.
+export type Db = pg.Pool | pg.PoolClient;
+
 // Small helper so the rest of the code doesn't import pg directly.
 export function query<T extends pg.QueryResultRow = any>(text: string, params?: unknown[]) {
   return pool.query<T>(text, params);

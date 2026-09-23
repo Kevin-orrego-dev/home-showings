@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import { env } from './config/env.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import { authRouter } from './modules/auth/auth.routes.js';
+import { listingsRouter } from './modules/listings/listings.routes.js';
 
 // app.ts builds the Express app but does NOT start listening.
 // Keeping it separate from server.ts lets tests import the app
@@ -23,6 +24,7 @@ export function createApp() {
   });
 
   app.use('/api/auth', authRouter);
+  app.use('/api/listings', listingsRouter);
 
   // Order matters: these two must be registered last.
   app.use('/api', notFoundHandler);

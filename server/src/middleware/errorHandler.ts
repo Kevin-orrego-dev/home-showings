@@ -12,11 +12,13 @@ const PG_EXCLUSION_VIOLATION = '23P01'; // our "no overlapping showings" constra
 // The frontend can rely on that single format.
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   if (err instanceof ZodError) {
+    const { formErrors, fieldErrors } = err.flatten();
     res.status(400).json({
       error: {
         code: 'VALIDATION_ERROR',
-        message: 'Invalid request data',
-        details: err.flatten().fieldErrors,
+        // Object-level rules (e.g. "Nothing to update") have no field, so surface them as the message.
+        message: formErrors[0] ?? 'Invalid request data',
+        details: fieldErrors,
       },
     });
     return;
