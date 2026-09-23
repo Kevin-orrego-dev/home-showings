@@ -3,6 +3,8 @@ import { requireAuth, requireRole } from '../../middleware/auth.js';
 import { idParamSchema } from '../../lib/validation.js';
 import { availabilitySchema, createListingSchema, updateListingSchema } from './listings.schemas.js';
 import * as listingsService from './listings.service.js';
+import { slotsQuerySchema } from '../scheduling/scheduling.schemas.js';
+import { getListingSlots } from '../scheduling/scheduling.service.js';
 
 export const listingsRouter = Router();
 
@@ -45,4 +47,11 @@ listingsRouter.delete('/:id', requireRole('seller'), async (req, res) => {
 listingsRouter.get('/:id', async (req, res) => {
   const { id } = idParamSchema.parse(req.params);
   res.json({ listing: await listingsService.getListingDetail(id, req.user!) });
+});
+
+// Openings of one listing (listing detail page). ?from=&to= ISO, default next 14 days.
+listingsRouter.get('/:id/slots', async (req, res) => {
+  const { id } = idParamSchema.parse(req.params);
+  const range = slotsQuerySchema.parse(req.query);
+  res.json({ slots: await getListingSlots(id, req.user!, range) });
 });

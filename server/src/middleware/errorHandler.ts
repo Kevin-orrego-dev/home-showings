@@ -35,8 +35,12 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   }
 
   if (err?.code === PG_EXCLUSION_VIOLATION) {
+    // err.constraint tells us WHICH exclusion rule fired, so the message can be specific.
+    const buyerClash = err.constraint === 'showings_no_overlap_per_buyer';
     res.status(409).json({
-      error: { code: 'SLOT_TAKEN', message: 'That time slot was just booked. Please pick another one.' },
+      error: buyerClash
+        ? { code: 'BUYER_BUSY', message: 'You already have another showing at that time.' }
+        : { code: 'SLOT_TAKEN', message: 'That time slot was just booked. Please pick another one.' },
     });
     return;
   }

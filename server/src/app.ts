@@ -6,6 +6,8 @@ import { env } from './config/env.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import { authRouter } from './modules/auth/auth.routes.js';
 import { listingsRouter } from './modules/listings/listings.routes.js';
+import { searchRouter } from './modules/scheduling/search.routes.js';
+import { showingsRouter } from './modules/showings/showings.routes.js';
 
 // app.ts builds the Express app but does NOT start listening.
 // Keeping it separate from server.ts lets tests import the app
@@ -25,6 +27,8 @@ export function createApp() {
 
   app.use('/api/auth', authRouter);
   app.use('/api/listings', listingsRouter);
+  app.use('/api/search', searchRouter);
+  app.use('/api/showings', showingsRouter);
 
   // Order matters: these two must be registered last.
   app.use('/api', notFoundHandler);
