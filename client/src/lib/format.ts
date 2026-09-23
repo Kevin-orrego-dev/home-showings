@@ -26,7 +26,7 @@ export function formatDate(ymd: string) {
 }
 
 /** Short timezone name for an instant in a zone, e.g. "CDT", "GMT-5". */
-function tzAbbreviation(date: Date, timeZone: string) {
+export function tzAbbreviation(date: Date, timeZone: string) {
   return (
     new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'short' })
       .formatToParts(date)
@@ -60,10 +60,35 @@ export function localTimeHint(iso: string, houseTimeZone: string) {
   return house === local ? null : `${local} your time`;
 }
 
+/** A Date's calendar day in the browser's timezone as YYYY-MM-DD. */
+export function toYmd(d: Date) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
 /** Today's date in the browser's timezone as YYYY-MM-DD. */
 export function todayYmd() {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  return toYmd(new Date());
+}
+
+/** "2026-09-26" + 3 days -> "2026-09-29" (noon avoids DST edge cases). */
+export function addDaysYmd(ymd: string, days: number) {
+  const d = new Date(`${ymd}T12:00:00`);
+  d.setDate(d.getDate() + days);
+  return toYmd(d);
+}
+
+/** Day of week (0 = Sunday) of a YYYY-MM-DD date. */
+export function dayOfWeekYmd(ymd: string) {
+  return new Date(`${ymd}T12:00:00`).getDay();
+}
+
+/**
+ * Local wall-clock date + time in the BROWSER's timezone -> ISO instant.
+ * new Date('2026-09-26T09:00') is interpreted as local time by the JS spec,
+ * and toISOString() turns it into an unambiguous UTC instant for the API.
+ */
+export function localToIso(ymd: string, hhmm: string) {
+  return new Date(`${ymd}T${hhmm}`).toISOString();
 }
 
 export const TIMEZONES = [

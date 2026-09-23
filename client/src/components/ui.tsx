@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react';
+import type { ComponentPropsWithRef, InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react';
 
 // Small set of reusable UI primitives. Deliberately no component library:
 // a handful of Tailwind components is faster to build and to explain than
@@ -22,7 +22,8 @@ export function Button({
   children,
   disabled,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: ButtonVariant; loading?: boolean }) {
+}: ComponentPropsWithRef<'button'> & { variant?: ButtonVariant; loading?: boolean }) {
+  // React 19: `ref` is a normal prop, so it flows through ...props (no forwardRef needed).
   return (
     <button
       className={cx(
