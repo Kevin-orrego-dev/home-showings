@@ -77,17 +77,17 @@ export function WeeklyScheduleEditor({ rules, onChange, errors }: Props) {
                 {DAY_NAMES[day]}
               </label>
 
-              <div className="flex-1 space-y-2">
+              <div className="min-w-0 flex-1 space-y-2">
                 {!enabled && <p className="pt-2 text-sm text-slate-400">No showings</p>}
                 {dayRules.map(({ rule, index }) => (
-                  <div key={index} className="flex items-center gap-2">
+                  <div key={index} className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto] items-center gap-2 sm:max-w-md">
                     <Input
                       type="time"
                       step={900}
                       aria-label={`${DAY_NAMES[day]} start time`}
                       value={rule.startTime}
                       onChange={(e) => update(index, { startTime: e.target.value })}
-                      className={cx('w-32', errors[day] && 'border-red-400')}
+                      className={cx('min-w-0', errors[day] && 'border-red-400')}
                     />
                     <span className="text-slate-400">–</span>
                     <Input
@@ -96,7 +96,7 @@ export function WeeklyScheduleEditor({ rules, onChange, errors }: Props) {
                       aria-label={`${DAY_NAMES[day]} end time`}
                       value={rule.endTime}
                       onChange={(e) => update(index, { endTime: e.target.value })}
-                      className={cx('w-32', errors[day] && 'border-red-400')}
+                      className={cx('min-w-0', errors[day] && 'border-red-400')}
                     />
                     <Button variant="ghost" type="button" onClick={() => remove(index)} aria-label="Remove time range">
                       ✕

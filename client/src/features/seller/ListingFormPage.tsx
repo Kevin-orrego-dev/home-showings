@@ -173,7 +173,7 @@ export function ListingFormPage() {
   if (isEdit && existing.error) return <Alert>{existing.error}</Alert>;
 
   return (
-    <form onSubmit={onSubmit} className="mx-auto max-w-3xl space-y-6" noValidate>
+    <form onSubmit={onSubmit} className="mx-auto max-w-4xl space-y-6" noValidate>
       <div className="flex items-center justify-between">
         <div>
           <Link to="/seller/listings" className="text-sm text-slate-500 hover:underline">

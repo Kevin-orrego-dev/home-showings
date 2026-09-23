@@ -95,22 +95,35 @@ export function AvailabilityPicker({ windows, onChange }: Props) {
 
       <ul className="space-y-2">
         {windows.map((w, i) => (
-          <li key={w.id} className="flex items-center gap-2">
-            <Input
-              type="date"
-              aria-label={`Window ${i + 1} date`}
-              min={todayYmd()}
-              value={w.date}
-              onChange={(e) => update(w.id, { date: e.target.value })}
-              className="w-40"
-            />
+          <li key={w.id} className="rounded-lg border border-slate-200 bg-slate-50/50 p-2">
+            <div className="flex items-center gap-2">
+              <Input
+                type="date"
+                aria-label={`Window ${i + 1} date`}
+                min={todayYmd()}
+                value={w.date}
+                onChange={(e) => update(w.id, { date: e.target.value })}
+                className="min-w-0 flex-1"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                className="shrink-0 px-2"
+                aria-label={`Remove window ${i + 1}`}
+                onClick={() => onChange(windows.filter((x) => x.id !== w.id))}
+              >
+                ✕
+              </Button>
+            </div>
+            {/* grid with minmax(0,1fr): both time inputs shrink evenly and can never overflow the card */}
+            <div className="mt-2 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2">
             <Input
               type="time"
               step={900}
               aria-label={`Window ${i + 1} from`}
               value={w.start}
               onChange={(e) => update(w.id, { start: e.target.value })}
-              className={cx('w-28', w.end <= w.start && 'border-red-400')}
+              className={cx('min-w-0', w.end <= w.start && 'border-red-400')}
             />
             <span className="text-slate-400">–</span>
             <Input
@@ -119,22 +132,20 @@ export function AvailabilityPicker({ windows, onChange }: Props) {
               aria-label={`Window ${i + 1} to`}
               value={w.end}
               onChange={(e) => update(w.id, { end: e.target.value })}
-              className={cx('w-28', w.end <= w.start && 'border-red-400')}
+              className={cx('min-w-0', w.end <= w.start && 'border-red-400')}
             />
-            <Button
-              type="button"
-              variant="ghost"
-              aria-label={`Remove window ${i + 1}`}
-              onClick={() => onChange(windows.filter((x) => x.id !== w.id))}
-            >
-              ✕
-            </Button>
+            </div>
           </li>
         ))}
       </ul>
 
-      <div className="flex items-center justify-between">
-        <button type="button" onClick={addWindow} className="text-sm font-medium text-brand-600 hover:underline" disabled={windows.length >= 10}>
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+        <button
+          type="button"
+          onClick={addWindow}
+          className="whitespace-nowrap text-sm font-medium text-brand-600 hover:underline disabled:opacity-50"
+          disabled={windows.length >= 10}
+        >
           + Add another time
         </button>
         <span className="text-xs text-slate-400">Times in your timezone ({BROWSER_TIMEZONE})</span>

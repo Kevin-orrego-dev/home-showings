@@ -23,11 +23,11 @@ export function BlackoutDatesEditor({ value, onChange }: Props) {
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-end gap-2">
-        <div>
+        <div className="w-full sm:w-auto">
           <label htmlFor="blackout-date" className="mb-1 block text-xs text-slate-500">
             Date
           </label>
-          <Input id="blackout-date" type="date" min={todayYmd()} value={date} onChange={(e) => setDate(e.target.value)} className="w-44" />
+          <Input id="blackout-date" type="date" min={todayYmd()} value={date} onChange={(e) => setDate(e.target.value)} className="w-full sm:w-48" />
         </div>
         <div className="min-w-48 flex-1">
           <label htmlFor="blackout-reason" className="mb-1 block text-xs text-slate-500">

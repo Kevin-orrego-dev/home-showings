@@ -66,7 +66,7 @@ export function BuyerSearchPage() {
   const refresh = () => lastQuery && runSearch(lastQuery);
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] xl:grid-cols-[400px_minmax(0,1fr)]">
       <aside>
         <Card className="p-5 lg:sticky lg:top-6">
           <form onSubmit={onSubmit} className="space-y-5" noValidate>
@@ -87,7 +87,7 @@ export function BuyerSearchPage() {
                     <option value="">No max</option>
                     {PRICE_OPTIONS.map((p) => (
                       <option key={p} value={p}>
-                        ${p.toLocaleString()}
+                        ${p.toLocaleString('en-US')}
                       </option>
                     ))}
                   </Select>

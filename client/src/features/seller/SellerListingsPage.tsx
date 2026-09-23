@@ -36,7 +36,7 @@ export function SellerListingsPage() {
           and set the hours buyers can visit.
         </EmptyState>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
           {listings?.map((l) => (
             <ListingCard key={l.id} listing={l} onChanged={refetch} onError={setActionError} />
           ))}

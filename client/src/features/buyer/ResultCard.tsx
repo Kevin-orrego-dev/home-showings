@@ -23,7 +23,7 @@ export function ResultCard({ result, onPick }: { result: SearchResult; onPick: (
   return (
     <Card className="flex flex-col overflow-hidden md:flex-row">
       <ListingPhoto url={listing.photoUrl} title={listing.title} className="h-40 w-full md:h-auto md:w-56 md:shrink-0" />
-      <div className="flex-1 space-y-3 p-5">
+      <div className="min-w-0 flex-1 space-y-3 p-4 sm:p-5">
         <div>
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 className="text-lg font-semibold text-slate-900">{listing.title}</h2>
@@ -31,7 +31,7 @@ export function ResultCard({ result, onPick }: { result: SearchResult; onPick: (
           </div>
           <p className="text-sm text-slate-500">
             {listing.address}, {listing.city} · {listing.bedrooms} bd · {listing.bathrooms} ba
-            {listing.sqft ? ` · ${listing.sqft.toLocaleString()} sqft` : ''}
+            {listing.sqft ? ` · ${listing.sqft.toLocaleString('en-US')} sqft` : ''}
           </p>
           {listing.description && <p className="mt-2 line-clamp-2 text-sm text-slate-600">{listing.description}</p>}
         </div>
@@ -43,7 +43,7 @@ export function ResultCard({ result, onPick }: { result: SearchResult; onPick: (
           <div className="space-y-2">
             {visibleDays.map(([day, daySlots]) => (
               <div key={day} className="flex flex-col gap-2 sm:flex-row sm:items-start">
-                <span className="w-24 shrink-0 pt-1 text-sm font-medium text-slate-700">{day}</span>
+                <span className="shrink-0 pt-1 text-sm font-medium whitespace-nowrap text-slate-700 sm:w-24">{day}</span>
                 <div className="flex flex-wrap gap-1.5">
                   {daySlots.map((s) => (
                     <button
