@@ -62,7 +62,7 @@ const listingFields = {
   address: z.string().trim().min(1, 'Address is required').max(200),
   city: z.string().trim().min(1, 'City is required').max(100),
   // The API speaks integer cents; the UI converts from dollars.
-  priceCents: z.number().int().positive().max(1_000_000_000_00),
+  priceCents: z.number().int().positive('Price must be greater than 0').max(1_000_000_000_00),
   bedrooms: z.number().int().min(0).max(50),
   bathrooms: z.number().min(0).max(50).multipleOf(0.5),
   sqft: z.number().int().positive().max(100_000).nullable().optional(),

@@ -4,6 +4,9 @@ import { Spinner } from './components/ui';
 import { homePathFor, useAuth } from './features/auth/AuthContext';
 import { LoginPage } from './features/auth/LoginPage';
 import { RegisterPage } from './features/auth/RegisterPage';
+import { ListingFormPage } from './features/seller/ListingFormPage';
+import { SellerListingsPage } from './features/seller/SellerListingsPage';
+import { SellerShowingsPage } from './features/seller/SellerShowingsPage';
 import { RequireAuth } from './routes/RequireAuth';
 
 // Temporary placeholders, replaced in the next parts.
@@ -27,8 +30,10 @@ export function App() {
         <Route path="register" element={<RegisterPage />} />
 
         <Route path="seller" element={<RequireAuth role="seller" />}>
-          <Route path="listings" element={<Placeholder title="My listings" />} />
-          <Route path="showings" element={<Placeholder title="Seller showings" />} />
+          <Route path="listings" element={<SellerListingsPage />} />
+          <Route path="listings/new" element={<ListingFormPage />} />
+          <Route path="listings/:id/edit" element={<ListingFormPage />} />
+          <Route path="showings" element={<SellerShowingsPage />} />
         </Route>
 
         <Route path="buyer" element={<RequireAuth role="buyer" />}>
