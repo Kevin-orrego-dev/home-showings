@@ -71,7 +71,23 @@ cp server/.env.example server/.env        # macOS / Linux
 copy server\.env.example server\.env      # Windows
 ```
 
-### 4. Run the API
+### 4. Create the tables and demo data
+
+```bash
+npm run db:migrate   # creates the schema (runs server/src/db/migrations/*.sql)
+npm run db:seed      # inserts demo users, listings and one booked showing
+```
+
+`npm run db:reset` drops everything and runs both again.
+
+**Demo accounts** (password `password123` for all):
+
+| Role | Email |
+|---|---|
+| Seller | `seller@demo.com`, `seller2@demo.com` |
+| Buyer | `buyer@demo.com`, `buyer2@demo.com` |
+
+### 5. Run the API
 
 ```bash
 npm run dev:server
