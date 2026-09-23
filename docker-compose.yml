@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: home-showings-db
+    environment:
+      POSTGRES_USER: showings
+      POSTGRES_PASSWORD: showings
+      POSTGRES_DB: showings
+    ports:
+      # Host port 5433 so it doesn't clash with any Postgres already running on 5432
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U showings -d showings"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
